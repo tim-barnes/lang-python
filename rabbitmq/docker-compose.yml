@@ -1,0 +1,55 @@
+version: "2"
+
+services:
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    hostname: "rabbit"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq"
+    volumes:
+      - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
+      #- "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro"
+    
+  requester:
+    build: .
+    working_dir: /root
+    command: python3 -u requester.py -n 100 --req x.req --res x.res
+    depends_on: 
+      - rabbitmq
+
+  term_ax:
+    build: .
+    working_dir: /root
+    command: python3 -u term.py -a 3 --iq x.req --oq x.term
+    depends_on: 
+      - rabbitmq
+    
+  term_bx:
+    build: .
+    working_dir: /root
+    command: python3 -u term.py -b 1 --iq x.req --oq x.term
+    depends_on: 
+      - rabbitmq
+
+  term_c:
+    build: .
+    working_dir: /root
+    command: python3 -u term.py -c -7 --iq x.req --oq x.term
+    depends_on: 
+      - rabbitmq
+
+  sum:
+    build: .
+    working_dir: /root
+    command: python3 -u sum.py -t 3 --iq x.term --oq x.res
+    depends_on:
+      - rabbitmq
+

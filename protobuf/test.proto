@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+message ResponseRequest {
+    string conversation_id = 1;
+    int32  sequence_num = 2;
+}
+
+
+message Response {
+    string text = 1;
+    float  score = 2;
+}
+
+
+service Conversation {
+
+    rpc utterance(ResponseRequest) returns (stream Response) {}
+
+}
+
+
+
