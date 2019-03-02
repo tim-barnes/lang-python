@@ -22,3 +22,7 @@ class B:
 
 with A.get() as b:
     b.foo()
+
+print(__name__)
+print(__file__)
+
