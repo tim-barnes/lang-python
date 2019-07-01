@@ -1,0 +1,49 @@
+version: '3.5'
+
+# Common definition for any service using core2 image
+x-platform: &platform
+  build:
+    context: ./
+  environment: &platform-env
+    PYTHONPATH: /proto/
+    PYTHONUNBUFFERED: 1
+  #  REGISTRY_PORT: 5000
+  #  FLASK_APP: /proto/app/platform.py
+  #  FLASK_ENV: development
+  #depends_on:
+  #  - registry
+  volumes:
+    - ./:/proto/
+
+services:
+  # Platforms A, B and C
+  app_a:
+    <<: *platform
+    command: python app_a/main.py
+
+  worker_a:
+    <<: *platform
+    command: celery -A worker_a worker --loglevel=info
+
+  worker_b:
+    <<: *platform
+    command: celery -A worker_b worker --loglevel=info
+
+  redis:
+    image: "redis:alpine"
+
+#  platform_b:
+#    <<: *platform
+#    environment:
+#      <<: *platform-env
+#      ENTITY_ID: b
+#      APPS_AUTHORIZED: y=rwx
+#      PEER_PLATFORMS: a=x,b=x
+
+#  platform_c:
+#    <<: *platform
+#    environment:
+#      <<: *platform-env
+#      ENTITY_ID: c
+#      APPS_AUTHORIZED: y=r,z=r
+#      PEER_PLATFORMS: a=x,b=x

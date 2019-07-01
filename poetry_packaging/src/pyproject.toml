@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "test_pythonlib"
+version = "0.1.0"
+description = "Test library for poetry behaviour"
+authors = ["Tim Barnes <tim.barnes@project-tracr.com>"]
+
+packages = [
+    { include = "submod1", from = "." },
+    { include = "submod2" },
+    { include = "optmod1" },
+    { include = "optmod2" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+attrs = "^19.1"
+six = "^1.12"
+
+[tool.poetry.dev-dependencies]
+pytest = "^4.4"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
