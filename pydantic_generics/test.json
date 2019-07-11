@@ -1,0 +1,126 @@
+{
+    "title": "TimeSeriesModel",
+    "description": "Test model docstring description",
+    "type": "object",
+    "properties": {
+        "str_field": {
+            "title": "Str_Field",
+            "description": "A string field",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/TimeSeries_str_"
+            }
+        },
+        "dbl_field": {
+            "title": "Dbl_Field",
+            "description": "A float field",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/TimeSeries_float_"
+            }
+        },
+        "int_field": {
+            "title": "Int_Field",
+            "description": "An int field",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/TimeSeries_int_"
+            }
+        },
+        "obj_field": {
+            "title": "Obj_Field",
+            "description": "An object field",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/TimeSeries_BaseModel_"
+            }
+        }
+    },
+    "required": [
+        "str_field",
+        "dbl_field",
+        "int_field",
+        "obj_field"
+    ],
+    "definitions": {
+        "TimeSeries_str_": {
+            "title": "TimeSeries[str]", "type": "object", "properties": {"ts": {"title": "Ts", "type": "integer"
+    },
+    "st": {
+        "title": "St",
+        "type": "integer"
+    },
+    "val": {
+        "title": "Val",
+        "type": "string"
+    }
+},
+"required": [
+    "ts",
+    "st",
+    "val"
+]
+},
+"TimeSeries_float_": {
+"title": "TimeSeries[float
+]", "type": "object", "properties": {"ts": {"title": "Ts", "type": "integer"
+},
+"st": {
+"title": "St",
+"type": "integer"
+},
+"val": {
+"title": "Val",
+"type": "number"
+}
+},
+"required": [
+"ts",
+"st",
+"val"
+]
+},
+"TimeSeries_int_": {
+"title": "TimeSeries[int
+]", "type": "object", "properties": {"ts": {"title": "Ts", "type": "integer"
+},
+"st": {
+"title": "St",
+"type": "integer"
+},
+"val": {
+"title": "Val",
+"type": "integer"
+}
+},
+"required": [
+"ts",
+"st",
+"val"
+]
+},
+"BaseModel": {
+"title": "BaseModel",
+"type": "object",
+"properties": {}
+},
+"TimeSeries_BaseModel_": {
+"title": "TimeSeries[BaseModel
+]", "type": "object", "properties": {"ts": {"title": "Ts", "type": "integer"
+},
+"st": {
+"title": "St",
+"type": "integer"
+},
+"val": {
+"$ref": "#/definitions/BaseModel"
+}
+},
+"required": [
+"ts",
+"st",
+"val"
+]
+}
+}
+}
