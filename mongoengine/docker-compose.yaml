@@ -10,6 +10,14 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
 
+  cache:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: tracr
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: JT7n1r8f50RqPOhuwfIXsJxq
+
   # mongo-express:
   #   image: mongo-express
   #   restart: always
@@ -19,10 +27,19 @@ services:
   #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
   #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
 
-  test:
+  # test:
+  #   build: .
+  #   environment:
+  #     MONGO_USERNAME: root
+  #     MONGO_PASSWORD: example
+  #   volumes:
+  #     - .:/app
+
+  test2:
     build: .
-    environment:
-      MONGO_USERNAME: root
-      MONGO_PASSWORD: example
     volumes:
       - .:/app
+    entrypoint:
+      - sh
+      - -c
+      - sleep infinity
