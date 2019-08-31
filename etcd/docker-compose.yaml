@@ -1,8 +1,8 @@
 version: '2'
 
-networks:
-  app-tier:
-    driver: bridge
+# networks:
+#   app-tier:
+#     driver: bridge
 
 services:
   etcd:
@@ -13,11 +13,30 @@ services:
     ports:
       - 2379:2379
       - 2380:2380
-    networks:
-      - app-tier
-  testapi:
-    build: testapi/
-    
-    networks:
-      - app-tier
+    # networks:
+    #   - app-tier
+
+  api:
+    build: api/
+    ports:
+      - 5000:5000
+    environment:
+      ETCD_HOST: etcd
+      ETCD_PORT: 2379
+    volumes:
+      - ./api/src:/app
+    command: 
+      - --reload
+  
+  controller:
+    build: controller/
+    environment:
+      ETCD_HOST: etcd
+      ETCD_PORT: 2379
+    volumes:
+      - ./controller/src:/app
+  
+    # networks:
+    #   - app-tier
+
 
