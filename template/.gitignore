@@ -1,0 +1,6 @@
+tests.xml
+converage.xml
+.converage
+__pycache__/
+*.pyc
+
